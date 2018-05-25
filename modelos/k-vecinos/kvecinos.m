@@ -12,6 +12,8 @@ function kvecinos(X, Y, Xtest, Ytest)
     k = [1,2,3,4,5,6,7,8,9,10];
     
     for w = 1:3
+        Texto = strcat('Iteración w = ', {' '}, num2str(w));
+        disp(Texto);
         for i = 1:5
             Texto = strcat('Iteración i = ', {' '}, num2str(i));
             disp(Texto);
@@ -58,8 +60,5 @@ function kvecinos(X, Y, Xtest, Ytest)
         Texto = strcat('Para el conjunto de testeo se obtuvo eficiencia = ',{' '},num2str(Eficiencia));
         disp(Texto);
     end
-    kFinal = mode(vec2);
-    Texto = strcat('La mejor eficiencia final fue para ks = ',{' '}, num2str(kFinal));
-    disp(Texto);
 end
 

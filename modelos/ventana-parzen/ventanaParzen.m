@@ -66,8 +66,5 @@ function ventanaParzen(X, Y, Xtest, Ytest)
         Texto = strcat('Para el conjunto de testeo se obtuvo eficiencia = ',{' '},num2str(Eficiencia));
         disp(Texto);
     end
-    hFinal = mode(vec2);
-    Texto = strcat('La mejor eficiencia final fue para h = ',{' '}, num2str(hFinal));
-    disp(Texto);
 end
 

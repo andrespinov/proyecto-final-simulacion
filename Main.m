@@ -45,7 +45,7 @@ if punto == 1 % Ventana de Parzen
 elseif punto == 2 % K-Vecinos
     kvecinos(X, Y, Xtest, Ytest);
 elseif punto == 3 % Redes Neuronales Artificiales
-    redesneuronales(X, Y, Xtest, Ytest, N);
+    redesneuronales(X, Y, Xtest, Ytest);
 elseif punto == 4 % Random Forest
     randomforest(X, Y, Xtest, Ytest, N);
 elseif punto == 5 % Máquinas de Soporte Vectorial
