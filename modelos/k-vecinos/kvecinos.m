@@ -7,11 +7,15 @@ function kvecinos(X, Y, Xtest, Ytest)
 %
 
     porcentaje = 0.7; %Porcentaje de la partición
-    
+    numClases = length(unique(Ytest));
     %Se definen los parámetros a estimar
     k = [1,2,3,4,5,6,7,8,9,10];
     
-    for w = 1:3
+    % Normalización de los conjuntos
+    [X, mu, sigma] = zscore(X);
+    Xtest = normalizar(Xtest, mu, sigma);
+    
+    for w = 1:1
         Texto = strcat('Iteración w = ', {' '}, num2str(w));
         disp(Texto);
         for i = 1:5
@@ -21,12 +25,7 @@ function kvecinos(X, Y, Xtest, Ytest)
             [Xtrain, Ytrain, Xval, Yval] = bootstrapping(X, Y, porcentaje);
 
             %Iteración por cada valor del hiper-parámetro a estimar
-            for j=1:length(k)
-
-                % Normalización de los conjuntos
-                [Xtrain, mu, sigma] = zscore(Xtrain);
-                Xval = normalizar(Xval, mu, sigma);
-
+            for j = 1:length(k)
                 % Generación de la predicción del conjunto de validación con
                 % respecto al de entrenamiento
                 Yesti = entrenamientoKVecinos(Xval, Xtrain, Ytrain, k(j));
@@ -55,10 +54,24 @@ function kvecinos(X, Y, Xtest, Ytest)
         % conjunto de test con el k ganador
         Yesti = entrenamientoKVecinos(Xtest, X, Y, kEstimado);
 
-        % Se calcula nuevamente la eficiencia para este último entrenamiento
-        Eficiencia = (sum(Yesti == Ytest))/length(Ytest);
-        Texto = strcat('Para el conjunto de testeo se obtuvo eficiencia = ',{' '},num2str(Eficiencia));
+        % Se calcula la matriz de confusión para calcular las eficiencias
+        % correspondientes al parámetro ganador
+        MatrizConfusion = zeros(numClases, numClases);
+        for m = 1:size(Xtest,1)
+            MatrizConfusion(Yesti(m),Ytest(m)) = MatrizConfusion(Yesti(m),Ytest(m)) + 1;
+        end
+        Eficiencia = sum(diag(MatrizConfusion))/sum(MatrizConfusion(:));
+        Texto = strcat('Para el conjunto de testeo se obtuvo eficiencia general = ',{' '},num2str(Eficiencia));
         disp(Texto);
+        disp('Eficiencias para cada clase: ');
+        for m = 1:numClases
+            Texto = strcat('Clase', {' '}, num2str(m));
+            disp(Texto);
+            Texto = strcat ('Eficiencia de productor = ', {' '}, num2str(MatrizConfusion(m,m)/sum(MatrizConfusion(:,m))));
+            disp(Texto);
+            Texto = strcat ('Eficiencia de usuario = ', {' '}, num2str(MatrizConfusion(m,m)/sum(MatrizConfusion(m,:))));
+            disp(Texto);
+        end
     end
 end
 

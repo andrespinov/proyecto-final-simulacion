@@ -47,7 +47,7 @@ elseif punto == 2 % K-Vecinos
 elseif punto == 3 % Redes Neuronales Artificiales
     redesneuronales(X, Y, Xtest, Ytest);
 elseif punto == 4 % Random Forest
-    randomforest(X, Y, Xtest, Ytest, N);
+    randomforest(X, Y, Xtest, Ytest);
 elseif punto == 5 % Máquinas de Soporte Vectorial
-    maquinas(X, Y, Xtest, Ytest, N);
+    maquinas(X, Y, Xtest, Ytest);
 end
