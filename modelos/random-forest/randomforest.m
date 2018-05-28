@@ -34,7 +34,8 @@ function randomforest(X,Y,Xtest,Ytest)
                 end    
                 % Se obtiene la eficiencia por el fold en base a la de los
                 % arboles
-                EficienciaFold(fold) = mean(EficienciaXarbol);
+                exa = mean(EficienciaXarbol);
+                EficienciaFold(fold) = mean(exa);
             end
             % Se obtiene la eficiencia de la cantidad de árboles actual (n)
             Eficiencia(n) = mean(EficienciaFold);
@@ -78,7 +79,8 @@ function randomforest(X,Y,Xtest,Ytest)
                 EficienciasXFold(1,m) = EficienciasXFold(1,m) + (EficienciasXArbol(1,m)/arbolesEstimado);
                 EficienciasXFold(2,m) = EficienciasXFold(2,m) + (EficienciasXArbol(2,m)/arbolesEstimado);
             end
-            EficienciaFold(fold) = mean(EficienciaXArbol);
+            exa = mean(EficienciaXArbol);
+            EficienciaFold(fold) = mean(exa);
         end
         % Se obtienen las eficiencia para el conjunto de test con la
         % cantidad de árboles estimada
