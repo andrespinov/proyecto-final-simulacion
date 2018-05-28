@@ -8,6 +8,7 @@ function kvecinos(X, Y, Xtest, Ytest)
 
     porcentaje = 0.7; %Porcentaje de la partición
     numClases = length(unique(Ytest));
+    folds = 10;
     %Se definen los parámetros a estimar
     k = [1,2,3,4,5,6,7,8,9,10];
     
@@ -18,30 +19,29 @@ function kvecinos(X, Y, Xtest, Ytest)
     for w = 1:1
         Texto = strcat('Iteración w = ', {' '}, num2str(w));
         disp(Texto);
-        for i = 1:5
-            Texto = strcat('Iteración i = ', {' '}, num2str(i));
+        for i = 1:length(k)
+            Texto = strcat('K = ', {' '}, num2str(k(j)));
             disp(Texto);
-            % Se hace la partición entre los conjuntos de entrenamiento y validación.
-            [Xtrain, Ytrain, Xval, Yval] = bootstrapping(X, Y, porcentaje);
 
-            %Iteración por cada valor del hiper-parámetro a estimar
-            for j = 1:length(k)
+            for j = 1:folds
+                % Se hace la partición entre los conjuntos de entrenamiento y validación.
+                [Xtrain, Ytrain, Xval, Yval] = bootstrapping(X, Y, porcentaje);
+            
                 % Generación de la predicción del conjunto de validación con
                 % respecto al de entrenamiento
-                Yesti = entrenamientoKVecinos(Xval, Xtrain, Ytrain, k(j));
+                Yesti = entrenamientoKVecinos(Xval, Xtrain, Ytrain, k(i));
 
                 % Se encuentra la eficiencia de clasificación
                 Eficiencia(j) = (sum(Yesti == Yval))/length(Yval);
-                Texto = strcat('K = ', {' '}, num2str(k(j)));
-                disp(Texto);
-                Texto = strcat('Eficiencia = ',{' '},num2str(Eficiencia(j)));
-                disp(Texto);
             end
-            %Se guarda el índice del parámetro con mayor eficiencia
-            [~,ind] = max(Eficiencia);
-            vec(i) = ind;
+            % Se calcula la eficiencia de K en base a la media de todas las
+            % iteraciones
+            vec(i) = mean(Eficiencia);
+            Texto = strcat('La eficiencia general es = ', {' '}, num2str(vec(i)));
+            disp(Texto);
         end
-        kEstimado = k(mode(vec));
+        [~,ind] = max(vec);
+        kEstimado = k(ind);
         vec2(w) = kEstimado;
         Texto = strcat('La mejor eficiencia fue para k = ',{' '}, num2str(kEstimado));
         disp(Texto);

@@ -42,12 +42,12 @@ function ventanaParzen(X, Y, Xtest, Ytest)
             end
             % Se de la eficiencia para el h de acuerdo a la media de las
             % eficiencias en las iteraciones
-            vec(i) = mean(Eficiencia);
-            Texto = strcat('Eficiencia = ',{' '},num2str(vec(i)));
+            Texto = strcat('Eficiencia = ',{' '},num2str(Eficiencia(j)));
             disp(Texto);
+            [~,ind] = max(Eficiencia);
+            vec(i) = ind;
         end
-        [~,ind] = max(vec); 
-        hEstimado = h(ind);
+        hEstimado = h(mode(vec));
         Texto = strcat('La mejor eficiencia fue para h = ',{' '}, num2str(hEstimado));
         disp(Texto);
 

@@ -49,5 +49,5 @@ elseif punto == 3 % Redes Neuronales Artificiales
 elseif punto == 4 % Random Forest
     randomforest(X, Y, Xtest, Ytest);
 elseif punto == 5 % Máquinas de Soporte Vectorial
-    maquinas(X, Y, Xtest, Ytest);
+    maquinas(X, Y, Xtest, Ytest, 2);
 end
